@@ -1,7 +1,12 @@
 import { Doc, Position } from "codemirror";
 import { Observable, Observer } from "rxjs";
 import { first, map, timeout } from "rxjs/operators";
-import { createMessage, childOf, ofMessageType, JupyterMessage } from "@nteract/messaging";
+import {
+  createMessage,
+  childOf,
+  ofMessageType,
+  JupyterMessage
+} from "@nteract/messaging";
 import { Channels } from "@nteract/messaging";
 
 import { EditorChange, CMI } from "../types";
@@ -31,7 +36,11 @@ export function formChangeObject(cm: CMI, change: EditorChange) {
 //  <li class="CodeMirror-hint"></li>
 // </ul>
 // with each <li/> passed as the first argument of render.
-const _expand_experimental_completions = (editor: Doc, matches: any, cursor: Position) => ({
+const _expand_experimental_completions = (
+  editor: Doc,
+  matches: any,
+  cursor: Position
+) => ({
   to: cursor,
   from: cursor,
   list: matches.map((completion: any) => ({
@@ -100,12 +109,13 @@ export const expand_completions = (editor: any) => (results: any) => {
   };
 };
 
+type Completion = { list: any; from: any; to: any };
 export function codeCompleteObservable(
   channels: Channels,
   editor: CMI,
   message: JupyterMessage
-) {
-  const completion$ = channels.pipe(
+): Observable<Completion> {
+  const completion$: Observable<Completion> = channels.pipe(
     childOf(message),
     ofMessageType("complete_reply"),
     map(entry => entry.content),
@@ -115,7 +125,7 @@ export function codeCompleteObservable(
   );
 
   // On subscription, send the message
-  return Observable.create((observer: Observer<any>) => {
+  return Observable.create((observer: Observer<Completion>) => {
     const subscription = completion$.subscribe(observer);
     channels.next(message);
     return subscription;
