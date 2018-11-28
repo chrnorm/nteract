@@ -56,7 +56,7 @@ export interface VDOMEl {
  */
 export function objectToReactElement(obj: VDOMEl): React.ReactElement<any> {
   // Pack args for React.createElement
-  var args = [];
+  var args: any = [];
 
   if (!obj.tagName || typeof obj.tagName !== "string") {
     throw new Error(`Invalid tagName on ${JSON.stringify(obj, null, 2)}`);
@@ -106,7 +106,6 @@ export function objectToReactElement(obj: VDOMEl): React.ReactElement<any> {
     }
   }
 
-  // $FlowFixMe: React
   return React.createElement.apply({}, args);
 }
 
@@ -117,7 +116,7 @@ export function objectToReactElement(obj: VDOMEl): React.ReactElement<any> {
  * @return {Array}     - The array of mixed values.
  */
 export function arrayToReactChildren(arr: Array<VDOMEl>): React.ReactNodeArray {
-  var result = [];
+  var result: React.ReactNodeArray = [];
 
   // iterate through the `children`
   for (var i = 0, len = arr.length; i < len; i++) {
