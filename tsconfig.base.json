@@ -7,6 +7,11 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "jsx": "react",
-    "typeRoots": ["./node_modules/@types", "types"]
+    "typeRoots": ["./node_modules/@types", "types"],
+    "baseUrl": "./packages",
+    "moduleResolution": "node",
+    "paths": {
+      "@nteract/*": ["./*"]
+    }
   }
 }
