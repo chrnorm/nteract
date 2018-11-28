@@ -1,5 +1,8 @@
 import * as Immutable from "immutable";
 import * as commutable from "@nteract/commutable";
+
+import { ImmutableCell } from "@nteract/commutable"
+
 // All these selectors expect a NotebookModel as the top level state
 import { NotebookModel, CellId } from "@nteract/types";
 import { createSelector } from "reselect";
