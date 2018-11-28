@@ -1,5 +1,8 @@
 import * as Immutable from "immutable";
 import * as commutable from "@nteract/commutable";
+
+import { ImmutableCell } from "@nteract/commutable";
+
 // All these selectors expect a NotebookModel as the top level state
 import { NotebookModel, CellId } from "@nteract/types";
 import { createSelector } from "reselect";
@@ -12,13 +15,13 @@ import { createSelector } from "reselect";
  * @returns {Immutable.Map}
  */
 export const cellMap = (model: NotebookModel) =>
-  model.notebook.get("cellMap", Immutable.Map());
+  model.notebook.get("cellMap", Immutable.Map<CellId, ImmutableCell>());
 
 export const cellById = (model: NotebookModel, { id }: { id: CellId }) =>
   cellMap(model).get(id);
 
 export const cellOrder = (model: NotebookModel): Immutable.List<CellId> =>
-  model.notebook.get("cellOrder", Immutable.List());
+  model.notebook.get("cellOrder", Immutable.List<CellId>());
 
 export const cellFocused = (model: NotebookModel): CellId | null | undefined =>
   model.cellFocused;
@@ -30,9 +33,9 @@ export const codeCellIdsBelow = (model: NotebookModel) => {
   const cellFocused = model.cellFocused;
   if (!cellFocused) {
     // NOTE: if there is no focused cell, this runs none of the cells
-    return Immutable.List();
+    return Immutable.List<CellId>();
   }
-  const cellOrder = model.notebook.get("cellOrder", Immutable.List());
+  const cellOrder = model.notebook.get("cellOrder", Immutable.List<CellId>());
 
   const index = cellOrder.indexOf(cellFocused);
   return cellOrder
@@ -54,9 +57,9 @@ export const hiddenCellIds = createSelector(
 
 export const idsOfHiddenOutputs = createSelector(
   [cellMap, cellOrder],
-  (cellMap, cellOrder): Immutable.List<any> => {
+  (cellMap, cellOrder): Immutable.List<CellId> => {
     if (!cellOrder || !cellMap) {
-      return Immutable.List();
+      return Immutable.List<CellId>();
     }
 
     return cellOrder.filter(CellId =>

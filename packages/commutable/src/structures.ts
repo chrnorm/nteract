@@ -3,7 +3,7 @@
  */
 import uuid from "uuid/v4";
 
-import { CellID, makeNotebookRecord, ImmutableNotebook } from "./notebook";
+import { CellId, makeNotebookRecord, ImmutableNotebook } from "./notebook";
 
 import { makeCodeCell, makeMarkdownCell, ImmutableCell } from "./cells";
 
@@ -24,8 +24,8 @@ export const createNotebook = makeNotebookRecord;
 export const emptyNotebook = makeNotebookRecord();
 
 export type CellStructure = {
-  cellOrder: ImmutableList<CellID>;
-  cellMap: ImmutableMap<CellID, ImmutableCell>;
+  cellOrder: ImmutableList<CellId>;
+  cellMap: ImmutableMap<CellId, ImmutableCell>;
 };
 
 // Intended to make it easy to use this with (temporary mutable cellOrder +
@@ -55,26 +55,26 @@ export const appendCellToNotebook = (
 export const insertCellAt = (
   notebook: ImmutableNotebook,
   cell: ImmutableCell,
-  cellID: string,
+  cellId: string,
   index: number
 ): ImmutableNotebook =>
   notebook.withMutations(nb =>
     nb
-      .setIn(["cellMap", cellID], cell)
-      .set("cellOrder", nb.get("cellOrder").insert(index, cellID))
+      .setIn(["cellMap", cellId], cell)
+      .set("cellOrder", nb.get("cellOrder").insert(index, cellId))
   );
 
 export const insertCellAfter = (
   notebook: ImmutableNotebook,
   cell: ImmutableCell,
-  cellID: string,
-  priorCellID: string
+  cellId: string,
+  priorCellId: string
 ): ImmutableNotebook =>
   insertCellAt(
     notebook,
     cell,
-    cellID,
-    notebook.get("cellOrder").indexOf(priorCellID) + 1
+    cellId,
+    notebook.get("cellOrder").indexOf(priorCellId) + 1
   );
 
 /**
@@ -82,22 +82,22 @@ export const insertCellAfter = (
  */
 export const removeCell = (
   notebook: ImmutableNotebook,
-  cellID: string
+  cellId: string
 ): ImmutableNotebook => {
   console.log(
     "Deprecation Warning: removeCell() is being deprecated. Please use deleteCell() instead"
   );
 
-  return deleteCell(notebook, cellID);
+  return deleteCell(notebook, cellId);
 };
 
 export const deleteCell = (
   notebook: ImmutableNotebook,
-  cellID: string
+  cellId: string
 ): ImmutableNotebook =>
   notebook
-    .removeIn(["cellMap", cellID])
-    .update("cellOrder", cellOrder => cellOrder.filterNot(id => id === cellID));
+    .removeIn(["cellMap", cellId])
+    .update("cellOrder", cellOrder => cellOrder.filterNot(id => id === cellId));
 
 export const monocellNotebook = appendCellToNotebook(
   emptyNotebook,
