@@ -47,8 +47,8 @@ export type ImmutableOutputs = ImmutableList<ImmutableOutput>;
 
 export type ImmutableMimeBundle = ImmutableMap<string, any>;
 
-export type ImmutableCellOrder = ImmutableList<CellID>;
-export type ImmutableCellMap = ImmutableMap<CellID, ImmutableCell>;
+export type ImmutableCellOrder = ImmutableList<CellId>;
+export type ImmutableCellMap = ImmutableMap<CellId, ImmutableCell>;
 
 // .....................................
 // from structures
@@ -74,20 +74,20 @@ declare export function createCodeCell(
 declare export function insertCellAt(
   notebook: ImmutableNotebook,
   cell: ImmutableCell,
-  cellID: string,
+  cellId: string,
   index: number
 ): ImmutableNotebook;
 
 declare export function insertCellAfter(
   notebook: ImmutableNotebook,
   cell: ImmutableCell,
-  cellID: string,
-  priorCellID: string
+  cellId: string,
+  priorCellId: string
 ): ImmutableNotebook;
 
 declare export function deleteCell(
   notebook: ImmutableNotebook,
-  cellID: string
+  cellId: string
 ): ImmutableNotebook;
 
 declare export function appendCellToNotebook(

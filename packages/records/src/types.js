@@ -10,7 +10,7 @@ export type ExecutionCount = number | null;
 export type MimeBundle = JSONObject;
 
 export type CellType = "markdown" | "code";
-export type CellID = string;
+export type CellId = string;
 
 // These are very unserious types, since Records are not quite typable
 export type ImmutableNotebook = Object;
@@ -23,5 +23,5 @@ export type ImmutableOutputs = Array<ImmutableOutput>;
 
 export type ImmutableMimeBundle = Object;
 
-export type ImmutableCellOrder = Array<CellID>;
+export type ImmutableCellOrder = Array<CellId>;
 export type ImmutableCellMap = Object;

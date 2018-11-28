@@ -6,7 +6,7 @@ import type {
   ImmutableCell,
   ImmutableCellMap,
   ImmutableNotebook,
-  CellID,
+  CellId,
   ImmutableCellOrder,
   ImmutableOutput,
   ImmutableOutputs,
@@ -295,7 +295,7 @@ function focusNextCell(
     return state;
   }
 
-  const curIndex = cellOrder.findIndex((foundId: CellID) => id === foundId);
+  const curIndex = cellOrder.findIndex((foundId: CellId) => id === foundId);
   const curCellType = state.getIn(["notebook", "cellMap", id, "cell_type"]);
 
   const nextIndex = curIndex + 1;
@@ -326,7 +326,7 @@ function focusPreviousCell(
 ): NotebookModel {
   const cellOrder = state.getIn(["notebook", "cellOrder"], Immutable.List());
   const curIndex = cellOrder.findIndex(
-    (id: CellID) => id === action.payload.id
+    (id: CellId) => id === action.payload.id
   );
   const nextIndex = Math.max(0, curIndex - 1);
 
@@ -357,7 +357,7 @@ function focusNextCellEditor(
     return state;
   }
 
-  const curIndex = cellOrder.findIndex((foundId: CellID) => id === foundId);
+  const curIndex = cellOrder.findIndex((foundId: CellId) => id === foundId);
   const nextIndex = curIndex + 1;
 
   return state.set("editorFocused", cellOrder.get(nextIndex));
@@ -372,7 +372,7 @@ function focusPreviousCellEditor(
     Immutable.List()
   );
   const curIndex = cellOrder.findIndex(
-    (id: CellID) => id === action.payload.id
+    (id: CellId) => id === action.payload.id
   );
   const nextIndex = Math.max(0, curIndex - 1);
 

@@ -129,13 +129,13 @@ export function insertCellAfter(
   notebook: ImmutableNotebook,
   cell: NbformatCell,
   cellID: string,
-  priorCellID: string
+  priorCellId: string
 ): ImmutableNotebook {
   return insertCellAt(
     notebook,
     cell,
     cellID,
-    notebook["cellOrder"].indexOf(priorCellID) + 1
+    notebook["cellOrder"].indexOf(priorCellId) + 1
   );
 }
 
